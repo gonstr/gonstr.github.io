@@ -1,7 +1,7 @@
 {
   "name": "liri-sweden",
   "version": "0.1.0",
-  "homepage": "https://gonstr.github.io/lirigoestosweden",
+  "homepage": "https://gonstr.github.io/lirisweden",
   "private": true,
   "dependencies": {
     "cra-template": "1.2.0",

@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <div className="background"></div>
-      <div className="header">🌲❤️ Liri goes to Sweden for Christmas! ❤️🌲</div>
+      <div className="header">🌲❤️ Liri goes to Sweden! ❤️🌲</div>
       <Countdown date={arrival}>
         <Completionist />
       </Countdown>
