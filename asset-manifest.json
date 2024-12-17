@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/lirisweden/static/css/main.754bb7d1.css",
+    "main.js": "/lirisweden/static/js/main.dcbc33bc.js",
+    "static/media/background.jpg": "/lirisweden/static/media/background.c01b7727b6c5a3a0b305.jpg",
+    "index.html": "/lirisweden/index.html",
+    "main.754bb7d1.css.map": "/lirisweden/static/css/main.754bb7d1.css.map",
+    "main.dcbc33bc.js.map": "/lirisweden/static/js/main.dcbc33bc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.754bb7d1.css",
+    "static/js/main.dcbc33bc.js"
+  ]
+}
