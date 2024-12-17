@@ -1,11 +1,12 @@
 {
   "name": "liri-sweden",
   "version": "0.1.0",
-  "homepage": "https://gonstr.github.io/lirisweden",
+  "homepage": "https://gonstr.github.io",
   "private": true,
   "dependencies": {
     "cra-template": "1.2.0",
     "luxon": "^3.5.0",
+    "pure-snow.js": "^2.1.0",
     "react": "^19.0.0",
     "react-countdown": "^2.3.6",
     "react-dom": "^19.0.0",

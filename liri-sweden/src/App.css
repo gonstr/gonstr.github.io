@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+}
+
 .App {
   height: 100vh;
   background-image: url(/public/background.jpg);
@@ -10,6 +16,10 @@
   flex-direction: column;
 }
 
+.App.background2 {
+  background-image: url(/public/background2.jpg);
+}
+
 .App .background {
   position: absolute;
   top: 0;
@@ -17,14 +27,19 @@
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.6);
+  transition: background 0.5s;
 }
 
-.App .header {
-  font-size: 4rem;
-  color: white;
-  text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  margin-bottom: 4rem;
+.App .background.dark {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.App .snow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .App span {
@@ -33,4 +48,61 @@
   text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   z-index: 1;
+}
+
+.App .header {
+  font-size: 3rem;
+  color: white;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  margin: 2rem;
+  text-align: center;
+}
+
+.App .text {
+  font-size: 2rem;
+  color: white;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  max-width: 50%;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.App .footer {
+  font-size: 2rem;
+  color: white;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+@media only screen and (max-width: 768px) {
+  .App span {
+    font-size: 3rem;
+  }
+
+  .App .header {
+    font-size: 1.5rem;
+    margin: 1.5rem;
+  }
+
+  .App .text {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    max-width: 80%;
+  }
+
+  .App .footer {
+    font-size: 1rem;
+  }
+}
+
+.snowflake {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(white, white);
+  /* Workaround for Chromium's selective color inversion */
+  border-radius: 50%;
+  filter: drop-shadow(0 0 10px white);
 }
