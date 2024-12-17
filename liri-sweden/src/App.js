@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isWithinHours(arrival, 72)) {
+      if (isWithinHours(arrival, 24)) {
         if (version < 2) {
           createSnow();
           showSnow(true);
