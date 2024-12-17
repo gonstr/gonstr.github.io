@@ -41,7 +41,7 @@ function App() {
         {version === 1 ? "🌲 Welcome back Anna! 🌲" : "🇦🇹 Thanks for showing me Austria! 🇦🇹"}
       </div>
       <div className="text">
-        {version === 1 ? "I'm so excited to spend Christmas and New Year's together with you (and the cats ;). I'm looking forward to some peaceful days filled with relaxation, fresh air, and you!" : "I had a great time in Austria. I loved exploring Altenberg and Linz, eating delicious food, and spending time with you and your family. Thank you for showing me around and making me feel at home."}
+        {version === 1 ? "I'm so excited to spend Christmas and New Year's together with you (and the cats ;). I'm looking forward to some peaceful days filled with relaxation, fresh air, and you!" : "I had a great time in Austria and can't wait to go back. I loved exploring your home town and Linz, eating delicious food, and spending time with you and your family. Thank you for making me feel at home."}
       </div>
       <div className="text">
         {version === 1 ? "I hope you have a safe trip and I can't wait to see you again!" : "I hope you have a safe trip to Sweden and I can't wait to see you again!"}
