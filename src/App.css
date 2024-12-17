@@ -1,0 +1,36 @@
+.App {
+  height: 100vh;
+  background-image: url(/public/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.App .background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.App .header {
+  font-size: 4rem;
+  color: white;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  margin-bottom: 4rem;
+}
+
+.App span {
+  font-size: 10rem;
+  color: white;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  z-index: 1;
+}
