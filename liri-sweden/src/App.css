@@ -20,6 +20,10 @@ body {
   background-image: url(/public/background2.jpg);
 }
 
+.App.background3 {
+  background-image: url(/public/background3.jpg);
+}
+
 .App .background {
   position: absolute;
   top: 0;
@@ -48,6 +52,10 @@ body {
   text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   z-index: 1;
+}
+
+.App span.colored {
+  color: #ED625C;
 }
 
 .App .header {
