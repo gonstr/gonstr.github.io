@@ -10,8 +10,10 @@ const arrival = DateTime.fromObject(
 );
 
 function App() {
-  createSnow();
-  showSnow(true);
+  useEffect(() => {
+    createSnow();
+    showSnow(true);
+  });
 
   return (
     <div className={"App"}>
@@ -19,7 +21,7 @@ function App() {
       <div className="snow" id="snow"></div>
       <Countdown date={arrival} className={"colored"}/>
       <div className="header">
-        {"Welcome back to New Years in Sweden!"}
+        {"Welcome back to New Years in Sweden 2!"}
       </div>
       <div className="text">
         {"Looking forward to you coming here again :) Lets (try) to have a relaxing week, eat good food, go for nice walkies and watch some darts! (Lets go MVG!)"}
