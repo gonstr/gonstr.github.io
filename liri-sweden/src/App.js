@@ -24,7 +24,7 @@ function App() {
         {"Welcome back to New Years in Sweden 2!"}
       </div>
       <div className="text">
-        {"Looking forward to you coming here again 😊 Lets (try) to have a relaxing week, eat good food, go for nice walkies and watch some darts! (Lets go MVG!)"}
+        {"Looking forward to you coming here again 😊 Lets have a relaxing week, eat good food, go for nice walkies and watch some darts! (Lets go MVG!)"}
       </div>
       <div className="text">
         {"See you soon!" }
