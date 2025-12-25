@@ -5,7 +5,7 @@ import { createSnow, showSnow } from "pure-snow.js";
 const { DateTime } = require('luxon');
 
 const arrival = DateTime.fromObject(
-  { year: 2025, month: 12, day: 26, hour: 8, minute: 0 },
+  { year: 2025, month: 12, day: 26, hour: 13, minute: 30 },
   { zone: "CET" } // Set timezone to CET
 );
 
