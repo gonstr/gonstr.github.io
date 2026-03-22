@@ -101,7 +101,7 @@ function Spores() {
           delay: -(Math.random() * 30),
           glowDuration: 3 + Math.random() * 4,
           glowDelay: -(Math.random() * 7),
-          opacity: 0.2 + Math.random() * 0.6,
+          opacity: 0.1 + Math.random() * 0.5,
           coreColor: color.core,
           glowColor: color.glow,
         };
