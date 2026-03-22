@@ -53,7 +53,7 @@ body {
   height: 150%;
   top: -40%;
   left: -30%;
-  background: radial-gradient(ellipse at center, rgba(255, 185, 100, 0.45), transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(255, 185, 100, 0.25), transparent 65%);
   animation: glow-a 20s ease-in-out infinite;
 }
 
@@ -62,7 +62,7 @@ body {
   height: 140%;
   bottom: -40%;
   right: -30%;
-  background: radial-gradient(ellipse at center, rgba(120, 160, 255, 0.38), transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(120, 160, 255, 0.2), transparent 65%);
   animation: glow-b 26s ease-in-out infinite;
 }
 
@@ -71,23 +71,23 @@ body {
   height: 130%;
   top: -20%;
   left: 0%;
-  background: radial-gradient(ellipse at center, rgba(195, 135, 220, 0.32), transparent 60%);
+  background: radial-gradient(ellipse at center, rgba(195, 135, 220, 0.18), transparent 60%);
   animation: glow-c 32s ease-in-out infinite;
 }
 
 @keyframes glow-a {
-  0%, 100% { opacity: 0.15; transform: translate(0, 0) scale(1); }
-  50% { opacity: 1; transform: translate(8%, 10%) scale(1.1); }
+  0%, 100% { opacity: 0.1; transform: translate(0, 0) scale(1); }
+  50% { opacity: 0.6; transform: translate(8%, 10%) scale(1.1); }
 }
 
 @keyframes glow-b {
-  0%, 100% { opacity: 0.15; transform: translate(0, 0) scale(1); }
-  50% { opacity: 1; transform: translate(-10%, -8%) scale(1.1); }
+  0%, 100% { opacity: 0.1; transform: translate(0, 0) scale(1); }
+  50% { opacity: 0.6; transform: translate(-10%, -8%) scale(1.1); }
 }
 
 @keyframes glow-c {
-  0%, 100% { opacity: 0.15; transform: translate(0, 0) scale(1); }
-  50% { opacity: 0.9; transform: translate(6%, -10%) scale(1.08); }
+  0%, 100% { opacity: 0.1; transform: translate(0, 0) scale(1); }
+  50% { opacity: 0.5; transform: translate(6%, -10%) scale(1.08); }
 }
 
 /* Floating spores — Avatar-style drifting particles */
@@ -119,10 +119,10 @@ body {
     opacity: 0;
   }
   10% {
-    opacity: 0.8;
+    opacity: var(--max-opacity);
   }
   90% {
-    opacity: 0.8;
+    opacity: var(--max-opacity);
   }
   100% {
     transform: translate(var(--drift-x), var(--drift-y));

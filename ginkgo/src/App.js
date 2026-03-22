@@ -80,6 +80,9 @@ const SPORE_COLORS = [
   { core: 'rgba(235, 245, 255, 0.8)', glow: 'rgba(220, 235, 255, 0.5)' },
   { core: 'rgba(255, 245, 235, 0.8)', glow: 'rgba(255, 240, 220, 0.5)' },
   { core: 'rgba(245, 235, 255, 0.8)', glow: 'rgba(240, 225, 255, 0.5)' },
+  { core: 'rgba(255, 248, 220, 0.8)', glow: 'rgba(255, 240, 180, 0.45)' },
+  { core: 'rgba(255, 245, 210, 0.8)', glow: 'rgba(255, 235, 170, 0.45)' },
+  { core: 'rgba(210, 190, 245, 0.8)', glow: 'rgba(180, 150, 235, 0.5)' },
 ];
 
 function Spores() {
@@ -98,6 +101,7 @@ function Spores() {
           delay: -(Math.random() * 30),
           glowDuration: 3 + Math.random() * 4,
           glowDelay: -(Math.random() * 7),
+          opacity: 0.2 + Math.random() * 0.6,
           coreColor: color.core,
           glowColor: color.glow,
         };
@@ -119,6 +123,7 @@ function Spores() {
             background: p.coreColor,
             '--drift-x': `${p.driftX}px`,
             '--drift-y': `${p.driftY}px`,
+            '--max-opacity': p.opacity,
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
           }}
