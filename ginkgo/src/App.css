@@ -1,0 +1,152 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.App {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background image layer — Ken Burns slow zoom & drift */
+.background-image {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  background-image: url(/public/ginkgo.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  animation: ken-burns 50s ease-in-out infinite alternate;
+}
+
+@keyframes ken-burns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.08) translate(-2%, 1.5%); }
+}
+
+/* Time-of-day color overlay — colors interpolated in JS every 10s */
+.time-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Ambient light - separate layers animating only opacity & transform (GPU composited) */
+.ambient-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ambient-light .glow {
+  position: absolute;
+  border-radius: 50%;
+  will-change: opacity, transform;
+}
+
+.ambient-light .glow-warm {
+  width: 150%;
+  height: 150%;
+  top: -40%;
+  left: -30%;
+  background: radial-gradient(ellipse at center, rgba(255, 185, 100, 0.45), transparent 65%);
+  animation: glow-a 20s ease-in-out infinite;
+}
+
+.ambient-light .glow-cool {
+  width: 140%;
+  height: 140%;
+  bottom: -40%;
+  right: -30%;
+  background: radial-gradient(ellipse at center, rgba(120, 160, 255, 0.38), transparent 65%);
+  animation: glow-b 26s ease-in-out infinite;
+}
+
+.ambient-light .glow-soft {
+  width: 130%;
+  height: 130%;
+  top: -20%;
+  left: 0%;
+  background: radial-gradient(ellipse at center, rgba(195, 135, 220, 0.32), transparent 60%);
+  animation: glow-c 32s ease-in-out infinite;
+}
+
+@keyframes glow-a {
+  0%, 100% { opacity: 0.15; transform: translate(0, 0) scale(1); }
+  50% { opacity: 1; transform: translate(8%, 10%) scale(1.1); }
+}
+
+@keyframes glow-b {
+  0%, 100% { opacity: 0.15; transform: translate(0, 0) scale(1); }
+  50% { opacity: 1; transform: translate(-10%, -8%) scale(1.1); }
+}
+
+@keyframes glow-c {
+  0%, 100% { opacity: 0.15; transform: translate(0, 0) scale(1); }
+  50% { opacity: 0.9; transform: translate(6%, -10%) scale(1.08); }
+}
+
+/* Floating spores — Avatar-style drifting particles */
+.spores-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.spore {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1.5px);
+  animation: spore-float linear infinite;
+  will-change: transform, opacity;
+}
+
+.spore-glow {
+  position: absolute;
+  inset: -150%;
+  border-radius: 50%;
+  animation: spore-pulse ease-in-out infinite;
+}
+
+@keyframes spore-float {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--drift-x), var(--drift-y));
+    opacity: 0;
+  }
+}
+
+@keyframes spore-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Debug HUD */
+.debug-hud {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  z-index: 100;
+  pointer-events: none;
+}
