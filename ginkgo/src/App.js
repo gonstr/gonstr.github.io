@@ -101,7 +101,7 @@ function Spores() {
           delay: -(Math.random() * 30),
           glowDuration: 3 + Math.random() * 4,
           glowDelay: -(Math.random() * 7),
-          opacity: 0.1 + Math.random() * 0.5,
+          opacity: 0.08 + Math.random() * 0.35,
           coreColor: color.core,
           glowColor: color.glow,
         };
@@ -210,6 +210,10 @@ function App() {
         <div className="glow glow-cool" />
         <div className="glow glow-soft" />
       </div>
+      <div className="leaf-breathe" style={{
+        WebkitMaskImage: `url(${process.env.PUBLIC_URL}/ginkgo-mask.png)`,
+        maskImage: `url(${process.env.PUBLIC_URL}/ginkgo-mask.png)`,
+      }} />
       <Spores />
       {debugMode && (
         <div className="debug-hud">

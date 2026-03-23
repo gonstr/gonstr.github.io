@@ -77,17 +77,48 @@ body {
 
 @keyframes glow-a {
   0%, 100% { opacity: 0.1; transform: translate(0, 0) scale(1); }
-  50% { opacity: 0.6; transform: translate(8%, 10%) scale(1.1); }
+  50% { opacity: 0.6; transform: translate(15%, 18%) scale(1.15); }
 }
 
 @keyframes glow-b {
   0%, 100% { opacity: 0.1; transform: translate(0, 0) scale(1); }
-  50% { opacity: 0.6; transform: translate(-10%, -8%) scale(1.1); }
+  50% { opacity: 0.6; transform: translate(-18%, -15%) scale(1.15); }
 }
 
 @keyframes glow-c {
   0%, 100% { opacity: 0.1; transform: translate(0, 0) scale(1); }
-  50% { opacity: 0.5; transform: translate(6%, -10%) scale(1.08); }
+  50% { opacity: 0.5; transform: translate(12%, -18%) scale(1.12); }
+}
+
+/* Leaf breathing — masked glow on leaves only */
+.leaf-breathe {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  pointer-events: none;
+  background: rgba(255, 255, 240, 0.55);
+  mix-blend-mode: soft-light;
+  animation: ken-burns 50s ease-in-out infinite alternate, leaf-pulse 18s ease-in-out infinite, leaf-color 25s ease-in-out infinite;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  will-change: opacity, background;
+}
+
+@keyframes leaf-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes leaf-color {
+  0%, 100% { background: rgba(255, 255, 220, 0.7); }
+  25% { background: rgba(255, 210, 160, 0.7); }
+  50% { background: rgba(180, 220, 255, 0.7); }
+  75% { background: rgba(220, 180, 255, 0.7); }
 }
 
 /* Floating spores — Avatar-style drifting particles */
