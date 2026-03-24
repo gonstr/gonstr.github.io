@@ -74,27 +74,89 @@ function getTimeOfDay(hour) {
   return { phase, gradient, opacity, brightness };
 }
 
-const SPORE_COLORS = [
+const SPORE_COLORS_DAY = [
   { core: 'rgba(255, 255, 255, 0.8)', glow: 'rgba(255, 255, 255, 0.5)' },
   { core: 'rgba(255, 255, 255, 0.8)', glow: 'rgba(255, 255, 255, 0.5)' },
-  { core: 'rgba(235, 245, 255, 0.8)', glow: 'rgba(220, 235, 255, 0.5)' },
-  { core: 'rgba(255, 245, 235, 0.8)', glow: 'rgba(255, 240, 220, 0.5)' },
-  { core: 'rgba(245, 235, 255, 0.8)', glow: 'rgba(240, 225, 255, 0.5)' },
-  { core: 'rgba(255, 248, 220, 0.8)', glow: 'rgba(255, 240, 180, 0.45)' },
-  { core: 'rgba(255, 245, 210, 0.8)', glow: 'rgba(255, 235, 170, 0.45)' },
-  { core: 'rgba(210, 190, 245, 0.8)', glow: 'rgba(180, 150, 235, 0.5)' },
+  { core: 'rgba(255, 255, 255, 0.8)', glow: 'rgba(255, 255, 255, 0.5)' },
 ];
 
-function Spores() {
+const SPORE_COLORS_NIGHT = [
+  { core: 'rgba(190, 215, 255, 0.8)', glow: 'rgba(170, 200, 255, 0.45)' },
+  { core: 'rgba(200, 240, 220, 0.8)', glow: 'rgba(180, 230, 210, 0.45)' },
+  { core: 'rgba(215, 200, 240, 0.8)', glow: 'rgba(200, 185, 235, 0.45)' },
+  { core: 'rgba(240, 215, 190, 0.8)', glow: 'rgba(235, 205, 175, 0.45)' },
+  { core: 'rgba(240, 200, 215, 0.8)', glow: 'rgba(235, 185, 205, 0.45)' },
+  { core: 'rgba(190, 235, 235, 0.8)', glow: 'rgba(175, 225, 225, 0.45)' },
+];
+
+const ORB_COLORS = [
+  'rgba(60, 130, 255, 0.5)',
+  'rgba(100, 180, 255, 0.45)',
+  'rgba(140, 80, 255, 0.45)',
+  'rgba(60, 200, 180, 0.4)',
+  'rgba(180, 100, 255, 0.4)',
+];
+
+function NightOrbs({ brightness, bgMask }) {
+  const opacity = Math.max(0, (1 - brightness) * 0.8 - 0.2);
+  const orbs = useMemo(
+    () =>
+      Array.from({ length: 8 }, (_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        top: 20 + Math.random() * 60,
+        size: 150 + Math.random() * 200,
+        driftX: -60 + Math.random() * 120,
+        driftY: -40 + Math.random() * 80,
+        duration: 25 + Math.random() * 20,
+        delay: -(Math.random() * 40),
+        color: ORB_COLORS[Math.floor(Math.random() * ORB_COLORS.length)],
+      })),
+    []
+  );
+
+  if (opacity <= 0) return null;
+
+  return (
+    <div className="orbs-container" style={{
+      opacity,
+      transition: 'opacity 60s ease',
+      WebkitMaskImage: `url(${bgMask})`,
+      maskImage: `url(${bgMask})`,
+    }}>
+      {orbs.map((o) => (
+        <div
+          key={o.id}
+          className="night-orb"
+          style={{
+            left: `${o.left}%`,
+            top: `${o.top}%`,
+            width: `${o.size}px`,
+            height: `${o.size}px`,
+            background: `radial-gradient(circle, ${o.color}, transparent 70%)`,
+            '--drift-x': `${o.driftX}px`,
+            '--drift-y': `${o.driftY}px`,
+            animationDuration: `${o.duration}s`,
+            animationDelay: `${o.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function Spores({ brightness }) {
+  const isNight = brightness < 0.6;
   const particles = useMemo(
     () =>
       Array.from({ length: 40 }, (_, i) => {
-        const color = SPORE_COLORS[Math.floor(Math.random() * SPORE_COLORS.length)];
+        const dayColor = SPORE_COLORS_DAY[Math.floor(Math.random() * SPORE_COLORS_DAY.length)];
+        const nightColor = SPORE_COLORS_NIGHT[Math.floor(Math.random() * SPORE_COLORS_NIGHT.length)];
         return {
           id: i,
           left: Math.random() * 100,
           top: Math.random() * 100,
-          size: 3 + Math.random() * 9,
+          size: 3 + Math.random() * 14,
           driftX: -40 + Math.random() * 80,
           driftY: -60 + Math.random() * -20,
           duration: 12 + Math.random() * 18,
@@ -102,15 +164,20 @@ function Spores() {
           glowDuration: 3 + Math.random() * 4,
           glowDelay: -(Math.random() * 7),
           opacity: 0.08 + Math.random() * 0.35,
-          coreColor: color.core,
-          glowColor: color.glow,
+          dayCore: dayColor.core,
+          dayGlow: dayColor.glow,
+          nightCore: nightColor.core,
+          nightGlow: nightColor.glow,
         };
       }),
     []
   );
 
   return (
-    <div className="spores-container">
+    <div className="spores-container" style={{
+      opacity: Math.max(0, (1 - brightness) * 1.5 - 0.2),
+      transition: 'opacity 60s ease',
+    }}>
       {particles.map((p) => (
         <div
           key={p.id}
@@ -120,7 +187,8 @@ function Spores() {
             top: `${p.top}%`,
             width: `${p.size}px`,
             height: `${p.size}px`,
-            background: p.coreColor,
+            background: isNight ? p.nightCore : p.dayCore,
+            transition: 'background 60s ease',
             '--drift-x': `${p.driftX}px`,
             '--drift-y': `${p.driftY}px`,
             '--max-opacity': p.opacity,
@@ -131,7 +199,7 @@ function Spores() {
           <div
             className="spore-glow"
             style={{
-              background: `radial-gradient(circle, ${p.glowColor}, transparent 70%)`,
+              background: `radial-gradient(circle, ${isNight ? p.nightGlow : p.dayGlow}, transparent 70%)`,
               animationDuration: `${p.glowDuration}s`,
               animationDelay: `${p.glowDelay}s`,
             }}
@@ -210,11 +278,23 @@ function App() {
         <div className="glow glow-cool" />
         <div className="glow glow-soft" />
       </div>
+      <div className="bg-breathe" style={{
+        WebkitMaskImage: `url(${process.env.PUBLIC_URL}/ginkgo-bg-mask.png)`,
+        maskImage: `url(${process.env.PUBLIC_URL}/ginkgo-bg-mask.png)`,
+        '--night-intensity': Math.min((1 - activeTime.brightness) * 0.8, 0.6),
+      }} />
       <div className="leaf-breathe" style={{
         WebkitMaskImage: `url(${process.env.PUBLIC_URL}/ginkgo-mask.png)`,
         maskImage: `url(${process.env.PUBLIC_URL}/ginkgo-mask.png)`,
+        '--night-intensity': Math.min((1 - activeTime.brightness) * 0.7, 0.55),
       }} />
-      <Spores />
+      <div className="leaf-veins" style={{
+        WebkitMaskImage: `url(${process.env.PUBLIC_URL}/ginkgo-veins.png)`,
+        maskImage: `url(${process.env.PUBLIC_URL}/ginkgo-veins.png)`,
+        '--night-intensity': Math.min((1 - activeTime.brightness) * 0.6, 0.45),
+      }} />
+      <NightOrbs brightness={activeTime.brightness} bgMask={`${process.env.PUBLIC_URL}/ginkgo-bg-mask.png`} />
+      <Spores brightness={activeTime.brightness} />
       {debugMode && (
         <div className="debug-hud">
           <div>Press D to exit debug</div>

@@ -90,16 +90,16 @@ body {
   50% { opacity: 0.35; transform: translate(12%, -18%) scale(1.12); }
 }
 
-/* Leaf breathing — masked glow on leaves only */
-.leaf-breathe {
+/* Background breathing — color shifts behind leaves */
+.bg-breathe {
   position: absolute;
   inset: -5%;
   width: 110%;
   height: 110%;
   pointer-events: none;
-  background: rgba(255, 255, 240, 0.55);
+  background: rgba(180, 200, 255, 0.4);
   mix-blend-mode: soft-light;
-  animation: ken-burns 50s ease-in-out infinite alternate, leaf-pulse 18s ease-in-out infinite, leaf-color 25s ease-in-out infinite;
+  animation: ken-burns 50s ease-in-out infinite alternate, bg-color 30s ease-in-out infinite, bg-pulse 15s ease-in-out infinite;
   -webkit-mask-size: cover;
   mask-size: cover;
   -webkit-mask-position: center;
@@ -109,16 +109,106 @@ body {
   will-change: opacity, background;
 }
 
-@keyframes leaf-pulse {
+@keyframes bg-pulse {
   0%, 100% { opacity: 0; }
-  50% { opacity: 0.4; }
+  50% { opacity: var(--night-intensity, 0.5); }
 }
 
-@keyframes leaf-color {
-  0%, 100% { background: rgba(255, 255, 220, 0.7); }
-  25% { background: rgba(255, 210, 160, 0.7); }
-  50% { background: rgba(180, 220, 255, 0.7); }
-  75% { background: rgba(220, 180, 255, 0.7); }
+@keyframes bg-color {
+  0%, 100% { background: rgba(180, 210, 255, 0.4); }
+  33% { background: rgba(220, 180, 240, 0.4); }
+  66% { background: rgba(180, 240, 210, 0.4); }
+}
+
+/* Leaf breathing — masked glow on leaves only */
+.leaf-breathe {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  pointer-events: none;
+  background: rgba(255, 255, 240, 0.55);
+  mix-blend-mode: soft-light;
+  animation: ken-burns 50s ease-in-out infinite alternate, leaf-pulse 18s ease-in-out infinite;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  will-change: opacity;
+}
+
+@keyframes leaf-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: var(--night-intensity, 0.4); }
+}
+
+
+/* Night orbs — blurred glowing objects drifting in background */
+.orbs-container {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ken-burns 50s ease-in-out infinite alternate;
+}
+
+.night-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(15px);
+  animation: orb-drift linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes orb-drift {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--drift-x), var(--drift-y));
+    opacity: 0;
+  }
+}
+
+/* Leaf veins — subtle glow on vein textures */
+.leaf-veins {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.8);
+  mix-blend-mode: soft-light;
+  animation: ken-burns 50s ease-in-out infinite alternate, vein-pulse 7s ease-in-out infinite;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  will-change: opacity;
+}
+
+@keyframes vein-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: var(--night-intensity, 0.25); }
 }
 
 /* Floating spores — Avatar-style drifting particles */
@@ -132,7 +222,7 @@ body {
 .spore {
   position: absolute;
   border-radius: 50%;
-  filter: blur(1.5px);
+  filter: blur(4px);
   animation: spore-float linear infinite;
   will-change: transform, opacity;
 }
