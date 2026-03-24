@@ -286,12 +286,12 @@ function App() {
       <div className="leaf-breathe" style={{
         WebkitMaskImage: `url(${process.env.PUBLIC_URL}/ginkgo-mask.png)`,
         maskImage: `url(${process.env.PUBLIC_URL}/ginkgo-mask.png)`,
-        '--night-intensity': Math.min((1 - activeTime.brightness) * 0.7, 0.55),
+        '--night-intensity': Math.min((1 - activeTime.brightness) * 0.5, 0.35),
       }} />
       <div className="leaf-veins" style={{
         WebkitMaskImage: `url(${process.env.PUBLIC_URL}/ginkgo-veins.png)`,
         maskImage: `url(${process.env.PUBLIC_URL}/ginkgo-veins.png)`,
-        '--night-intensity': Math.min((1 - activeTime.brightness) * 0.6, 0.45),
+        '--night-intensity': Math.min((1 - activeTime.brightness) * 0.4, 0.3),
       }} />
       <NightOrbs brightness={activeTime.brightness} bgMask={`${process.env.PUBLIC_URL}/ginkgo-bg-mask.png`} />
       <Spores brightness={activeTime.brightness} />
