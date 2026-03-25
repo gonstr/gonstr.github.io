@@ -260,6 +260,39 @@ body {
   50% { opacity: 1; transform: scale(1.2); }
 }
 
+/* City lights — distant flickering warm dots in background */
+.city-lights-container {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ken-burns 50s ease-in-out infinite alternate;
+}
+
+.city-light {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(3px);
+  animation: city-flicker ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes city-flicker {
+  0%, 100% { opacity: 0.3; }
+  20% { opacity: 0.9; }
+  40% { opacity: 0.5; }
+  60% { opacity: 1; }
+  80% { opacity: 0.4; }
+}
+
 /* Debug HUD */
 .debug-hud {
   position: fixed;

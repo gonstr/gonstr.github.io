@@ -97,6 +97,59 @@ const ORB_COLORS = [
   'rgba(180, 100, 255, 0.4)',
 ];
 
+function CityLights({ brightness, bgMask }) {
+  const opacity = Math.max(0, (1 - brightness) * 1.2 - 0.3);
+  const lights = useMemo(
+    () =>
+      Array.from({ length: 25 }, (_, i) => {
+        const warmth = Math.random();
+        const r = 255;
+        const g = Math.round(180 + warmth * 60);
+        const b = Math.round(100 + warmth * 80);
+        return {
+          id: i,
+          left: 5 + Math.random() * 90,
+          top: 5 + Math.random() * 90,
+          size: 6 + Math.random() * 10,
+          color: `rgba(${r}, ${g}, ${b}, 0.9)`,
+          glowColor: `rgba(${r}, ${g}, ${b}, 0.4)`,
+          duration: 2 + Math.random() * 5,
+          delay: -(Math.random() * 7),
+          glowSize: 4 + Math.random() * 6,
+        };
+      }),
+    []
+  );
+
+  if (opacity <= 0) return null;
+
+  return (
+    <div className="city-lights-container" style={{
+      opacity,
+      transition: 'opacity 60s ease',
+      WebkitMaskImage: `url(${bgMask})`,
+      maskImage: `url(${bgMask})`,
+    }}>
+      {lights.map((l) => (
+        <div
+          key={l.id}
+          className="city-light"
+          style={{
+            left: `${l.left}%`,
+            top: `${l.top}%`,
+            width: `${l.size}px`,
+            height: `${l.size}px`,
+            background: l.color,
+            boxShadow: `0 0 ${l.glowSize}px ${l.glowColor}`,
+            animationDuration: `${l.duration}s`,
+            animationDelay: `${l.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function NightOrbs({ brightness, bgMask }) {
   const opacity = Math.max(0, (1 - brightness) * 0.8 - 0.2);
   const orbs = useMemo(
@@ -294,6 +347,7 @@ function App() {
         '--night-intensity': Math.min((1 - activeTime.brightness) * 0.4, 0.3),
       }} />
       <NightOrbs brightness={activeTime.brightness} bgMask={`${process.env.PUBLIC_URL}/ginkgo-bg-mask.png`} />
+      <CityLights brightness={activeTime.brightness} bgMask={`${process.env.PUBLIC_URL}/ginkgo-bg-mask.png`} />
       <Spores brightness={activeTime.brightness} />
       {debugMode && (
         <div className="debug-hud">
