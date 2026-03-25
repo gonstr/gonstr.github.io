@@ -20,6 +20,7 @@ body {
   background-size: cover;
   background-position: center;
   will-change: transform;
+  transform: translateZ(0);
   animation: ken-burns 50s ease-in-out infinite alternate;
 }
 
@@ -107,6 +108,7 @@ body {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   will-change: opacity, background;
+  transform: translateZ(0);
 }
 
 @keyframes bg-pulse {
@@ -137,6 +139,7 @@ body {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   will-change: opacity;
+  transform: translateZ(0);
 }
 
 @keyframes leaf-pulse {
@@ -204,6 +207,7 @@ body {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   will-change: opacity;
+  transform: translateZ(0);
 }
 
 @keyframes vein-pulse {
