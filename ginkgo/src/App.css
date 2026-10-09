@@ -324,14 +324,14 @@ body {
 
 .disc-spore-faint {
   display: block;
-  --max-opacity: 0.45;
+  --max-opacity: 0.32;
   animation: disc-fade 22s linear infinite;
   transition: visibility 0s 0.3s;
 }
 
 .disc-spore-faint svg {
   display: block;
-  filter: blur(0.6px) drop-shadow(0 0 4px rgba(255, 245, 220, 0.5));
+  filter: blur(1.2px) drop-shadow(0 0 6px rgba(255, 245, 220, 0.5));
 }
 
 .disc-spore-reveal {
