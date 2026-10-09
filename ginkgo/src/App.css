@@ -309,7 +309,8 @@ body {
   pointer-events: none;
 }
 
-/* Hidden disc — floats like a spore, opens the flight guide */
+/* Hidden disc — floats like a spore, opens the flight guide.
+   Drift and fade run on separate elements so hover can reveal a crisp copy. */
 .disc-spore {
   position: absolute;
   z-index: 10;
@@ -317,27 +318,70 @@ body {
   border: 0;
   background: none;
   cursor: pointer;
-  --max-opacity: 0.45;
-  animation: spore-float 22s linear infinite;
-  will-change: transform, opacity;
+  animation: disc-float 22s linear infinite;
+  will-change: transform;
 }
 
-.disc-spore:hover { animation-play-state: paused; }
+.disc-spore-faint {
+  display: block;
+  --max-opacity: 0.45;
+  animation: disc-fade 22s linear infinite;
+  transition: visibility 0s 0.3s;
+}
 
-.disc-spore svg {
+.disc-spore-faint svg {
   display: block;
   filter: blur(0.6px) drop-shadow(0 0 4px rgba(255, 245, 220, 0.5));
-  animation: disc-wobble 6s ease-in-out infinite;
-  transition: transform 0.4s, filter 0.4s;
 }
 
-.disc-spore:hover svg,
-.disc-spore:focus-visible svg {
-  transform: scale(1.8);
-  filter: drop-shadow(0 0 8px rgba(255, 240, 200, 0.95));
+.disc-spore-reveal {
+  position: absolute;
+  inset: 12px;
+  opacity: 0;
+  transform: scale(1);
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.disc-spore-reveal svg {
+  display: block;
+  filter: drop-shadow(0 0 6px rgba(255, 240, 200, 0.9));
+}
+
+.disc-spore-faint svg,
+.disc-spore-reveal svg {
+  animation: disc-wobble 6s ease-in-out infinite;
+}
+
+.disc-spore:hover,
+.disc-spore:hover .disc-spore-faint {
+  animation-play-state: paused;
+}
+
+.disc-spore:hover .disc-spore-faint,
+.disc-spore:focus-visible .disc-spore-faint {
+  visibility: hidden;
+  transition: visibility 0s;
+}
+
+.disc-spore:hover .disc-spore-reveal,
+.disc-spore:focus-visible .disc-spore-reveal {
+  opacity: 1;
+  transform: scale(2.3);
 }
 
 .disc-spore:focus-visible { outline: none; }
+
+@keyframes disc-float {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(var(--drift-x), var(--drift-y)); }
+}
+
+@keyframes disc-fade {
+  0% { opacity: 0; }
+  10% { opacity: var(--max-opacity); }
+  90% { opacity: var(--max-opacity); }
+  100% { opacity: 0; }
+}
 
 @keyframes disc-wobble {
   0%, 100% { rotate: -8deg; }
