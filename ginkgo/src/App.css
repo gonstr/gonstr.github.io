@@ -308,3 +308,38 @@ body {
   z-index: 100;
   pointer-events: none;
 }
+
+/* Hidden disc — floats like a spore, opens the flight guide */
+.disc-spore {
+  position: absolute;
+  z-index: 10;
+  padding: 12px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  --max-opacity: 0.45;
+  animation: spore-float 22s linear infinite;
+  will-change: transform, opacity;
+}
+
+.disc-spore:hover { animation-play-state: paused; }
+
+.disc-spore svg {
+  display: block;
+  filter: blur(0.6px) drop-shadow(0 0 4px rgba(255, 245, 220, 0.5));
+  animation: disc-wobble 6s ease-in-out infinite;
+  transition: transform 0.4s, filter 0.4s;
+}
+
+.disc-spore:hover svg,
+.disc-spore:focus-visible svg {
+  transform: scale(1.8);
+  filter: drop-shadow(0 0 8px rgba(255, 240, 200, 0.95));
+}
+
+.disc-spore:focus-visible { outline: none; }
+
+@keyframes disc-wobble {
+  0%, 100% { rotate: -8deg; }
+  50% { rotate: 10deg; }
+}

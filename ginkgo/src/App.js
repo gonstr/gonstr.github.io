@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import './App.css';
+import FlightGuide from './FlightGuide';
 
 const { DateTime } = require('luxon');
 
@@ -263,6 +264,43 @@ function Spores({ brightness }) {
   );
 }
 
+// One of the "spores" is secretly a disc golf disc — click it to open the flight guide.
+// Floats like the others, then reappears somewhere new each cycle.
+function randomDiscDrift() {
+  return {
+    left: 8 + Math.random() * 84,
+    top: 25 + Math.random() * 65,
+    driftX: -40 + Math.random() * 80,
+    driftY: -60 + Math.random() * -20,
+  };
+}
+
+function DiscSpore({ onClick }) {
+  const [drift, setDrift] = useState(randomDiscDrift);
+  return (
+    <button
+      className="disc-spore"
+      onClick={onClick}
+      onAnimationIteration={(e) => e.target === e.currentTarget && setDrift(randomDiscDrift())}
+      aria-label="Disc flight guide"
+      style={{
+        left: `${drift.left}%`,
+        top: `${drift.top}%`,
+        '--drift-x': `${drift.driftX}px`,
+        '--drift-y': `${drift.driftY}px`,
+      }}
+    >
+      <svg viewBox="0 0 24 24" width="13" height="13">
+        <ellipse cx="12" cy="13" rx="10" ry="4.2" fill="rgba(255, 245, 225, 0.55)" />
+        <ellipse cx="12" cy="11.6" rx="10" ry="4.2" fill="rgba(255, 250, 240, 0.85)" />
+        <ellipse cx="12" cy="11.6" rx="6" ry="2.3" fill="none" stroke="rgba(200, 180, 150, 0.6)" strokeWidth="0.8" />
+      </svg>
+    </button>
+  );
+}
+
+const GUIDE_HASH = '#flight';
+
 function App() {
   const [timeOfDay, setTimeOfDay] = useState(() => {
     const now = DateTime.now().setZone('CET');
@@ -271,6 +309,30 @@ function App() {
   const [debugMode, setDebugMode] = useState(false);
   const [debugTimeIdx, setDebugTimeIdx] = useState(4);
   const [overrideTime, setOverrideTime] = useState(null);
+  const [guideOpen, setGuideOpen] = useState(() => window.location.hash === GUIDE_HASH);
+  const openedInApp = useRef(false);
+
+  useEffect(() => {
+    const onHash = () => setGuideOpen(window.location.hash === GUIDE_HASH);
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const openGuide = () => {
+    openedInApp.current = true;
+    window.location.hash = GUIDE_HASH;
+  };
+
+  const closeGuide = useCallback(() => {
+    if (openedInApp.current) {
+      openedInApp.current = false;
+      window.history.back();
+    } else {
+      // Landed directly on #flight — drop the hash without leaving the site.
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      setGuideOpen(false);
+    }
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -349,6 +411,8 @@ function App() {
       <NightOrbs brightness={activeTime.brightness} bgMask={`${process.env.PUBLIC_URL}/ginkgo-bg-mask.png`} />
       <CityLights brightness={activeTime.brightness} bgMask={`${process.env.PUBLIC_URL}/ginkgo-bg-mask.png`} />
       <Spores brightness={activeTime.brightness} />
+      <DiscSpore onClick={openGuide} />
+      {guideOpen && <FlightGuide onClose={closeGuide} />}
       {debugMode && (
         <div className="debug-hud">
           <div>Press D to exit debug</div>

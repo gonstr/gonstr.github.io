@@ -1,0 +1,259 @@
+/* Disc flight guide — full-screen overlay above the scene */
+.fg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow-y: auto;
+  background: rgba(8, 14, 24, 0.78);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  color: #e8eef6;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  animation: fg-fade-in 0.5s ease;
+}
+
+.fg-overlay button { font-family: inherit; }
+
+@keyframes fg-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fg-content {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+  line-height: 1.55;
+  font-size: 15px;
+}
+
+.fg-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 201;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.fg-close:hover { background: rgba(255, 255, 255, 0.18); }
+
+.fg-header h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  margin: 0 0 8px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.fg-header p {
+  margin: 0;
+  color: #a9b8c9;
+  font-size: 17px;
+}
+
+.fg-section { margin-top: 56px; }
+
+.fg-section h2 {
+  font-size: 22px;
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+
+.fg-card h3 {
+  font-size: 15px;
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.fg-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.fg-card p { margin: 10px 0 0; color: #c3cfdc; font-size: 14px; }
+
+.fg-note { color: #8fa1b5; font-size: 13.5px; }
+.fg-mono { letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.fg-big { font-size: 26px; font-weight: 700; }
+.fg-big-label { font-size: 17px; font-weight: 600; }
+
+/* Flight numbers */
+.fg-numbers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 14px;
+}
+
+.fg-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-weight: 600;
+}
+
+.fg-gauge { width: 100%; margin-top: 6px; overflow: visible; }
+.fg-gauge-track { fill: rgba(255, 255, 255, 0.12); }
+.fg-gauge-fill { fill: #5ec8ff; }
+.fg-gauge-knob { fill: #fff; }
+.fg-gauge-label { fill: #8fa1b5; font-size: 8px; }
+
+/* Field diagrams */
+.fg-split {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 700px) {
+  .fg-split { grid-template-columns: 1fr; }
+  .fg-split .fg-field { max-width: 320px; margin: 0 auto; }
+}
+
+.fg-field { width: 100%; display: block; }
+.fg-distance { stroke: rgba(255, 255, 255, 0.07); stroke-dasharray: 3 5; }
+.fg-centerline { stroke: rgba(255, 255, 255, 0.12); stroke-dasharray: 2 6; }
+.fg-tee { fill: rgba(220, 210, 190, 0.35); }
+
+.fg-basket line,
+.fg-basket ellipse,
+.fg-basket path {
+  stroke: #d8dee6;
+  stroke-width: 1.4;
+  fill: none;
+}
+
+.fg-path {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.9;
+}
+
+.fg-path-main { stroke-width: 4; }
+.fg-path-thin { stroke-width: 2.2; }
+.fg-ghost { opacity: 0.18; stroke-dasharray: 4 6; }
+.fg-side-label { fill: rgba(255, 255, 255, 0.45); font-size: 11px; }
+
+.fg-legend { list-style: none; padding: 0; margin: 12px 0; }
+.fg-legend li { margin-bottom: 12px; padding-left: 22px; position: relative; color: #c3cfdc; }
+
+.fg-dot {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Simulator controls */
+.fg-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+
+.fg-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fg-toggle button {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: #dbe5f0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.fg-toggle button:hover { background: rgba(255, 255, 255, 0.12); }
+.fg-toggle button.active { background: #e8eef6; color: #0b1520; border-color: transparent; }
+.fg-toggle-small button { font-size: 12px; padding: 5px 10px; }
+
+.fg-sim-info p { color: #c3cfdc; }
+.fg-spin-row { display: flex; gap: 14px; align-items: center; }
+
+.fg-callout {
+  margin: 16px 0;
+  padding: 14px 16px;
+  border-left: 3px solid #ffa35e;
+  background: rgba(255, 163, 94, 0.08);
+  border-radius: 0 10px 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Spin badge */
+.fg-spin { flex-shrink: 0; }
+.fg-spin-disc { fill: rgba(255, 255, 255, 0.1); stroke: rgba(255, 255, 255, 0.5); stroke-width: 1.5; }
+.fg-spin-flight { fill: none; stroke: rgba(255, 255, 255, 0.15); stroke-width: 1; }
+.fg-spin-arrow { fill: none; stroke: #ffd36e; stroke-width: 2.5; stroke-linecap: round; }
+
+.fg-spin-rotor {
+  transform-origin: 28px 28px;
+  animation: fg-spin 1.6s linear infinite;
+}
+
+.fg-rotor-big { transform-origin: 100px 100px; animation-duration: 3s; }
+.fg-spin-ccw { animation-direction: reverse; }
+
+@keyframes fg-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Why-spin diagrams */
+.fg-why {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 700px) {
+  .fg-why { grid-template-columns: 1fr; }
+}
+
+.fg-phases { max-width: 640px; margin: 8px auto 0; }
+
+.fg-wide { grid-column: 1 / -1; }
+.fg-diagram { width: 100%; display: block; margin-top: 8px; overflow: visible; }
+.fg-small { fill: #a9b8c9; font-size: 11px; }
+.fg-air { fill: none; stroke: rgba(160, 200, 255, 0.35); stroke-width: 1.2; stroke-dasharray: 6 6; animation: fg-air 1.2s linear infinite; }
+
+@keyframes fg-air {
+  to { stroke-dashoffset: -12; }
+}
+
+.fg-airfoil { fill: #ffa35e; stroke: #fff; stroke-width: 1.2; }
+.fg-com { fill: #0b1520; stroke: #fff; stroke-width: 2; }
+.fg-force { stroke: #9be28a; stroke-width: 3; fill: none; stroke-linecap: round; }
+.fg-force-text { fill: #9be28a; }
+.fg-torque { stroke: #ffd36e; stroke-width: 2.5; fill: none; stroke-linecap: round; }
+.fg-top-disc { fill: rgba(255, 163, 94, 0.18); stroke: #ffa35e; stroke-width: 2; }
+.fg-push { fill: #9be28a; fill-opacity: 0.25; stroke: #9be28a; stroke-width: 2; }
+.fg-precess { fill: none; stroke: #9be28a; stroke-width: 2.5; stroke-dasharray: 5 4; stroke-linecap: round; }
+.fg-precess-text { fill: #9be28a; }
+
+/* Cheat sheet */
+.fg-cheat {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  gap: 14px;
+}
+
+.fg-cheat-card { display: flex; flex-direction: column; gap: 10px; }
+.fg-cheat-head { display: flex; align-items: center; gap: 8px; font-size: 13.5px; }
+.fg-small-text { font-size: 12.5px; color: #a9b8c9; }
+
+.fg-diagram-square { max-width: 300px; margin-left: auto; margin-right: auto; }
